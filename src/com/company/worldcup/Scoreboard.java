@@ -7,25 +7,28 @@ public class Scoreboard {
     private Match currentMatch;
     private final List<Match> previousMatches = new ArrayList<>();
 
-    public Scoreboard(Match currentMatch) {
-        this.currentMatch = currentMatch;
+    public Scoreboard() {
     }
 
-    public void startGame() {
+    public void startGame(Match match) {
         if (currentMatch != null)
-            System.out.println(currentMatch);
-        else
-            System.out.println("Match not found");
+            previousMatches.add(currentMatch);
+        currentMatch = match;
     }
 
-    public void updateScore(int homeTeamScore, int awayTeamScore) {
-        if (currentMatch != null)
-            currentMatch.getHomeTeam().setScore(homeTeamScore);
-        if (currentMatch != null)
-            currentMatch.getAwayTeam().setScore(awayTeamScore);
+    // Adds homeTeamPoints and awayTeamPoints to correspond teams
+    public void updateScore(int homeTeamPoints, int awayTeamPoints) {
+        if (currentMatch != null) {
+            int homeTeamScore = currentMatch.getHomeTeam().getScore();
+            int awayTeamScore = currentMatch.getAwayTeam().getScore();
+            currentMatch.getHomeTeam().setScore(homeTeamScore + homeTeamPoints);
+            currentMatch.getAwayTeam().setScore(awayTeamScore + awayTeamPoints);
+        }
     }
 
     public void finishGame() {
+        if (currentMatch != null)
+            previousMatches.add(currentMatch);
         currentMatch = null;
     }
 
@@ -35,9 +38,8 @@ public class Scoreboard {
         return summary.toString();
     }
 
-    public void setCurrentMatch(Match currentMatch) {
-        if (currentMatch != null)
-            previousMatches.add(this.currentMatch);
-        this.currentMatch = currentMatch;
+    @Override
+    public String toString() {
+        return currentMatch != null ? currentMatch.toString() : "Home _ - Away _";
     }
 }
