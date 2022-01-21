@@ -27,14 +27,19 @@ public class Scoreboard {
     }
 
     public void finishGame() {
-        if (currentMatch != null)
+        if (currentMatch != null) {
+            currentMatch.finish();
             previousMatches.add(currentMatch);
+        }
         currentMatch = null;
     }
 
     public String getSummary() {
         StringBuilder summary = new StringBuilder();
-        previousMatches.forEach(match -> summary.append(match).append("\n"));
+        previousMatches.stream()
+                .sorted()
+                .filter(Match::isFinished)
+                .forEach(match -> summary.append(match).append("\n"));
         return summary.toString();
     }
 

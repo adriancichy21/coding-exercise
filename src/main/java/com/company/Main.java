@@ -24,7 +24,7 @@ public class Main {
                 new Match(new Team("Argentina"), new Team("Australia"))
         ));
 
-        for (Match plannedMatch: plannedMatches) {
+        for (Match plannedMatch : plannedMatches) {
             scoreboard.startGame(plannedMatch);
             scoreboard.updateScore(random.nextInt(11), random.nextInt(11));
             scoreboard.finishGame();
